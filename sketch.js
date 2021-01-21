@@ -6,7 +6,7 @@ const Bodies = Matter.Bodies;
 var engine, world;
 var box1, pig1;
 var bgimg;
-var constraintLog,chain;
+var constraintLog,chain,platform;
 
 function preload()
 {
@@ -20,7 +20,7 @@ function setup(){
 
     
     ground = new Ground(600,height,1200,20)
-
+    platform= new Ground(150,300,300,300)
     box1 = new Box(700,320,70,70);
     box2 = new Box(920,320,70,70);
     pig1 = new Pig(810, 350);
@@ -38,8 +38,8 @@ function setup(){
 
     bird = new Bird(200,100);
 
-    constraintLog = new Log(100,100,100, PI/2);
-    chain= new Chain(bird.body,constraintLog.body);
+    //constraintLog = new Log(100,100,100, PI/2);
+    chain= new Chain(bird.body,{x:200,y:100});
 
 }
 
@@ -63,9 +63,20 @@ function draw(){
     box5.display();
     log4.display();
     log5.display();
+    platform.display();
 
-    constraintLog.display();
+    //constraintLog.display();
     chain.display();
 
     bird.display();
+}
+
+function mouseDragged()
+{
+ Matter.Body.setPosition(bird.body,{x:mouseX,y:mouseY})
+}
+
+function mouseReleased()
+{
+   chain.fly()
 }
